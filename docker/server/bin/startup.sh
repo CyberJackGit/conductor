@@ -30,7 +30,20 @@ if [ -z "$CONFIG_PROP" ];
     echo "Using '$CONFIG_PROP'";
     export config_file=/app/config/$CONFIG_PROP
 fi
+echo "ELASTICSEARCH_URL: $ELASTICSEARCH_URL"
+echo "REDIS_ADDR:    $REDIS_ADDR"
+echo "REDIS_PORT:    $REDIS_PORT"
+echo "REDIS_MODE:        $REDIS_MODE"
+echo "REDIS_ZONE1:       $REDIS_ZONE1"
+echo "REDIS_USE_SSL:     $REDIS_USE_SSL"
 
+sed -i "s;##ELASTICSEARCH_URL##;$ELASTICSEARCH_URL;" $config_file
+sed -i "s;##REDIS_ADDR##;$REDIS_ADDR;" $config_file 
+sed -i "s;##REDIS_PORT##;$REDIS_PORT;" $config_file 
+sed -i "s;##DB_PASSWORD##;$DB_PASSWORD;" $config_file
+sed -i "s;##REDIS_MODE##;$REDIS_MODE;" $config_file
+sed -i "s;##REDIS_ZONE1##;$REDIS_ZONE1;" $config_file
+sed -i "s;##REDIS_USE_SSL##;$REDIS_USE_SSL;" $config_file
 echo "Using java options config: $JAVA_OPTS"
 
 java ${JAVA_OPTS} -jar -DCONDUCTOR_CONFIG_FILE=$config_file conductor-server-*-boot.jar 2>&1 | tee -a /app/logs/server.log
