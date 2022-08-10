@@ -53,7 +53,9 @@ public class RedisClusterConfiguration extends JedisCommandsConfigurer {
                 hostSupplier.getHosts().stream()
                         .map(h -> new HostAndPort(h.getHostName(), h.getPort()))
                         .collect(Collectors.toSet());
+        String user = properties.getUser();
         String password = getPassword(hostSupplier.getHosts());
+        boolean useSSL = properties.isUseSSL();
 
         if (password != null) {
             log.info("Connecting to Redis Cluster with AUTH");
@@ -63,11 +65,23 @@ public class RedisClusterConfiguration extends JedisCommandsConfigurer {
                             Protocol.DEFAULT_TIMEOUT,
                             Protocol.DEFAULT_TIMEOUT,
                             DEFAULT_MAX_ATTEMPTS,
+                            user,
                             password,
-                            genericObjectPoolConfig));
+                            null,
+                            genericObjectPoolConfig,
+                            useSSL));
         } else {
             return new JedisCluster(
-                    new redis.clients.jedis.JedisCluster(hosts, genericObjectPoolConfig));
+                    new redis.clients.jedis.JedisCluster(
+                            hosts,
+                            Protocol.DEFAULT_TIMEOUT,
+                            Protocol.DEFAULT_TIMEOUT,
+                            DEFAULT_MAX_ATTEMPTS,
+                            null,
+                            null,
+                            null,
+                            genericObjectPoolConfig,
+                            useSSL));
         }
     }
 
