@@ -108,6 +108,10 @@ public class RedisProperties {
 
     private int numTestsPerEvictionRun = 3;
 
+    private boolean useSSL = false;
+
+    private String user = "default";
+
     public int getNumTestsPerEvictionRun() {
         return numTestsPerEvictionRun;
     }
@@ -282,5 +286,21 @@ public class RedisProperties {
         } else {
             return () -> new RetryNTimes(maxRetryAttempts, false);
         }
+    }
+
+    public boolean isUseSSL() {
+        return useSSL;
+    }
+
+    public void setUseSSL(boolean useSSL) {
+        this.useSSL = useSSL;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }
