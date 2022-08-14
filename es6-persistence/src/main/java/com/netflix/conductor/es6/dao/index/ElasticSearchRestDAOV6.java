@@ -261,6 +261,8 @@ public class ElasticSearchRestDAOV6 extends ElasticSearchBaseDAO implements Inde
     /** Initializes the index with the required templates and mappings. */
     private void initIndexTemplate(String type) {
         String template = "template_" + type;
+        Map<String, String> params = new HashMap<>();
+        params.put("include_type_name", "true");
         try {
             if (doesResourceNotExist("/_template/" + template)) {
                 LOGGER.info("Creating the index template '" + template + "'");
@@ -271,7 +273,7 @@ public class ElasticSearchRestDAOV6 extends ElasticSearchBaseDAO implements Inde
                 HttpEntity entity =
                         new NByteArrayEntity(templateSource, ContentType.APPLICATION_JSON);
                 elasticSearchAdminClient.performRequest(
-                        HttpMethod.PUT, "/_template/" + template, Collections.emptyMap(), entity);
+                        HttpMethod.PUT, "/_template/" + template, params, entity);
             }
         } catch (Exception e) {
             LOGGER.error("Failed to init " + template, e);
@@ -348,6 +350,8 @@ public class ElasticSearchRestDAOV6 extends ElasticSearchBaseDAO implements Inde
         LOGGER.info("Adding index '{}'...", index);
 
         String resourcePath = "/" + index;
+        Map<String, String> params = new HashMap<>();
+        params.put("include_type_name", "true");
 
         if (doesResourceNotExist(resourcePath)) {
 
@@ -363,7 +367,7 @@ public class ElasticSearchRestDAOV6 extends ElasticSearchBaseDAO implements Inde
                 elasticSearchAdminClient.performRequest(
                         HttpMethod.PUT,
                         resourcePath,
-                        Collections.emptyMap(),
+                        params,
                         new NStringEntity(setting.toString(), ContentType.APPLICATION_JSON));
                 LOGGER.info("Added '{}' index", index);
             } catch (ResponseException e) {
@@ -406,13 +410,15 @@ public class ElasticSearchRestDAOV6 extends ElasticSearchBaseDAO implements Inde
 
         String resourcePath = "/" + index + "/_mapping/" + mappingType;
 
+        Map<String, String> params = new HashMap<>();
+        params.put("include_type_name", "true");
+
         if (doesResourceNotExist(resourcePath)) {
             HttpEntity entity =
                     new NByteArrayEntity(
                             loadTypeMappingSource(mappingFilename).getBytes(),
                             ContentType.APPLICATION_JSON);
-            elasticSearchAdminClient.performRequest(
-                    HttpMethod.PUT, resourcePath, Collections.emptyMap(), entity);
+            elasticSearchAdminClient.performRequest(HttpMethod.PUT, resourcePath, params, entity);
             LOGGER.info("Added '{}' mapping", mappingType);
         } else {
             LOGGER.info("Mapping '{}' already exists", mappingType);
