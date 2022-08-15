@@ -158,9 +158,9 @@ public class ElasticSearchRestDAOV6 extends ElasticSearchBaseDAO implements Inde
 
         this.workflowIndexName = getIndexName(WORKFLOW_DOC_TYPE);
         this.taskIndexName = getIndexName(TASK_DOC_TYPE);
-        this.logIndexPrefix = this.indexPrefix + "_" + LOG_DOC_TYPE;
-        this.messageIndexPrefix = this.indexPrefix + "_" + MSG_DOC_TYPE;
-        this.eventIndexPrefix = this.indexPrefix + "_" + EVENT_DOC_TYPE;
+        this.logIndexPrefix = this.logIndexName = this.indexPrefix + "_" + LOG_DOC_TYPE;
+        this.messageIndexPrefix = this.messageIndexName = this.indexPrefix + "_" + MSG_DOC_TYPE;
+        this.eventIndexPrefix = this.eventIndexName = this.indexPrefix + "_" + EVENT_DOC_TYPE;
         int workerQueueSize = properties.getAsyncWorkerQueueSize();
         int maximumPoolSize = properties.getAsyncMaxPoolSize();
 
