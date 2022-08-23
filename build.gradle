@@ -141,11 +141,6 @@ allprojects {
                 strictly '[2.17.2,3.0)'
             }
         }
-        implementation('com.netflix.conductor:conductor-metrics') {
-            version {
-                strictly '3.10.3'
-            }
-        }
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
         testImplementation('org.springframework.boot:spring-boot-starter-test')
