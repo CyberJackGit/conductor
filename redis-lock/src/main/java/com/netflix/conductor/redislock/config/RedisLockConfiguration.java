@@ -49,6 +49,7 @@ public class RedisLockConfiguration {
             throw new RuntimeException(message, ie);
         }
         String redisServerAddress = properties.getServerAddress();
+        String redisServerUsername = properties.getServerUsername();
         String redisServerPassword = properties.getServerPassword();
         String masterName = properties.getServerMasterName();
 
@@ -68,6 +69,7 @@ public class RedisLockConfiguration {
                         .useClusterServers()
                         .setScanInterval(2000) // cluster state scan interval in milliseconds
                         .addNodeAddress(redisServerAddress.split(","))
+                        .setUsername(redisServerUsername)
                         .setPassword(redisServerPassword)
                         .setTimeout(connectionTimeout);
                 break;
