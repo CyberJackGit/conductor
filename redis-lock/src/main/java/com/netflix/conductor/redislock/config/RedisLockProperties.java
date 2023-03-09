@@ -23,6 +23,21 @@ public class RedisLockProperties {
     /** The address of the redis server following format -- host:port */
     private String serverAddress = "redis://127.0.0.1:6379";
 
+    /** Size of parallel resolution of dns address in each sequential dns resolution bulk */
+    private int sequentialDnsResolverBulkSize = 8;
+
+    /** Initial connections number issued to slave nodes */
+    private int slaveConnectionMinimumIdleSize = 4;
+
+    /** connections pool max size issued to slave nodes */
+    private int slaveConnectionPoolSize = 8;
+
+    /** Initial connections number issued to master nodes */
+    private int masterConnectionMinimumIdleSize = 4;
+
+    /** connections pool max size issued to master nodes */
+    private int masterConnectionPoolSize = 8;
+
     /** The username for redis authentication */
     private String serverUsername = null;
 
@@ -55,6 +70,46 @@ public class RedisLockProperties {
 
     public void setServerAddress(String serverAddress) {
         this.serverAddress = serverAddress;
+    }
+
+    public int getSequentialDnsResolverBulkSize() {
+        return sequentialDnsResolverBulkSize;
+    }
+
+    public void setSequentialDnsResolverBulkSize(int sequentialDnsResolverBulkSize) {
+        this.sequentialDnsResolverBulkSize = sequentialDnsResolverBulkSize;
+    }
+
+    public int getSlaveConnectionMinimumIdleSize() {
+        return slaveConnectionMinimumIdleSize;
+    }
+
+    public void setSlaveConnectionMinimumIdleSize(int slaveConnectionMinimumIdleSize) {
+        this.slaveConnectionMinimumIdleSize = slaveConnectionMinimumIdleSize;
+    }
+
+    public int getSlaveConnectionPoolSize() {
+        return slaveConnectionPoolSize;
+    }
+
+    public void setSlaveConnectionPoolSize(int slaveConnectionPoolSize) {
+        this.slaveConnectionPoolSize = slaveConnectionPoolSize;
+    }
+
+    public int getMasterConnectionMinimumIdleSize() {
+        return masterConnectionMinimumIdleSize;
+    }
+
+    public void setMasterConnectionMinimumIdleSize(int masterConnectionMinimumIdleSize) {
+        this.masterConnectionMinimumIdleSize = masterConnectionMinimumIdleSize;
+    }
+
+    public int getMasterConnectionPoolSize() {
+        return masterConnectionPoolSize;
+    }
+
+    public void setMasterConnectionPoolSize(int masterConnectionPoolSize) {
+        this.masterConnectionPoolSize = masterConnectionPoolSize;
     }
 
     public String getServerUsername() {

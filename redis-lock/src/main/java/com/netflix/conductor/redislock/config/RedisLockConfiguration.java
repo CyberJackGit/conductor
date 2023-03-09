@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 import org.redisson.Redisson;
 import org.redisson.config.Config;
+import org.redisson.connection.SequentialDnsAddressResolverFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -49,6 +50,11 @@ public class RedisLockConfiguration {
             throw new RuntimeException(message, ie);
         }
         String redisServerAddress = properties.getServerAddress();
+        int sequentialDnsResolverBulkSize = properties.getSequentialDnsResolverBulkSize();
+        int slaveConnectionMinimumIdleSize = properties.getSlaveConnectionMinimumIdleSize();
+        int slaveConnectionPoolSize = properties.getMasterConnectionPoolSize();
+        int masterConnectionMinimumIdleSize = properties.getMasterConnectionMinimumIdleSize();
+        int masterConnectionPoolSize = properties.getMasterConnectionPoolSize();
         String redisServerUsername = properties.getServerUsername();
         String redisServerPassword = properties.getServerPassword();
         String masterName = properties.getServerMasterName();
@@ -65,8 +71,15 @@ public class RedisLockConfiguration {
                         .setTimeout(connectionTimeout);
                 break;
             case CLUSTER:
+                SequentialDnsAddressResolverFactory sequentialDnsResolver =
+                        new SequentialDnsAddressResolverFactory(sequentialDnsResolverBulkSize);
                 redisConfig
+                        .setAddressResolverGroupFactory(sequentialDnsResolver)
                         .useClusterServers()
+                        .setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize)
+                        .setSlaveConnectionPoolSize(slaveConnectionPoolSize)
+                        .setMasterConnectionMinimumIdleSize(masterConnectionMinimumIdleSize)
+                        .setMasterConnectionPoolSize(masterConnectionPoolSize)
                         .setScanInterval(2000) // cluster state scan interval in milliseconds
                         .addNodeAddress(redisServerAddress.split(","))
                         .setUsername(redisServerUsername)

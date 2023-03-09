@@ -673,7 +673,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-redis-lock"
             ],
-            "locked": "3.13.3"
+            "locked": "3.20.0"
         },
         "org.slf4j:slf4j-api": {
             "firstLevelTransitive": [
