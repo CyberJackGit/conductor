@@ -23,6 +23,9 @@ public class RedisLockProperties {
     /** The address of the redis server following format -- host:port */
     private String serverAddress = "redis://127.0.0.1:6379";
 
+    /** The username for redis authentication */
+    private String serverUsername = null;
+
     /** The password for redis authentication */
     private String serverPassword = null;
 
@@ -52,6 +55,14 @@ public class RedisLockProperties {
 
     public void setServerAddress(String serverAddress) {
         this.serverAddress = serverAddress;
+    }
+
+    public String getServerUsername() {
+        return serverUsername;
+    }
+
+    public void setServerUsername(String serverUsername) {
+        this.serverUsername = serverUsername;
     }
 
     public String getServerPassword() {
