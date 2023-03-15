@@ -40,7 +40,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    implementation 'com.netflix.conductor:conductor-metrics:3.10.3'
+    implementation "com.netflix.conductor:conductor-metrics:${revConductorMetrics}"
 
     implementation "org.springdoc:springdoc-openapi-ui:${revOpenapi}"
 
